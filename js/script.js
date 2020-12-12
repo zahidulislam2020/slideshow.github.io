@@ -34,9 +34,6 @@ function pauseDelayBar() {
 	delayBar.style.animationName = null;
 }
 
-
-
-
 //Create first and last slide's clone
 var firstClone = slides[0].cloneNode(true);
 var lastClone = slides[slides.length - 1].cloneNode(true);
@@ -80,6 +77,7 @@ var moveToNextSlide = () => {
 	index++;
 	slideContainer.style.transition = "1000ms ease-in-out";
 	slideContainer.style.transform = `translateX(${-slideWidth * index}px)`;
+	nextButtonAction();
 }
 
 
