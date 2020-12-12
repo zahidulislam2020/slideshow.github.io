@@ -10,8 +10,31 @@ var next = document.querySelector("#next");
 var indicatorsWrapper = document.querySelector(".btn-wrapper");
 var dots = document.querySelectorAll(".dots");
 var slides = document.querySelectorAll(".image-rack");
+var delayBar = document.querySelector(".delayIndicators-before");
+
+var current_px = 40;
+
+
 var index = 1;
 var slideId;
+
+
+delayBar.style.animationDuration = `${autoPlay.interval}ms`;
+
+delayBar.style.animationName = 'width';
+
+function startDelayBar() {
+	delayBar.style.animationName = 'width';
+	delayBar.style.animationPlayState = 'running';
+}
+
+function pauseDelayBar() {
+	
+	delayBar.style.animationPlayState = 'paused';
+	delayBar.style.animationName = null;
+}
+
+
 
 
 //Create first and last slide's clone
@@ -45,7 +68,9 @@ var getSlides = () => document.querySelectorAll(".image-rack");
 var startSlideShow = () => {
 	slideId = setInterval(() => {
 		moveToNextSlide();
-
+		
+		startDelayBar();
+		
 	}, autoPlay.interval)
 }
 
@@ -55,7 +80,6 @@ var moveToNextSlide = () => {
 	index++;
 	slideContainer.style.transition = "1000ms ease-in-out";
 	slideContainer.style.transform = `translateX(${-slideWidth * index}px)`;
-	nextButtonAction();
 }
 
 
@@ -85,8 +109,12 @@ slideContainer.addEventListener('transitionend', () => {
 });
 
 function pauseSliding(){
+	
 	clearInterval(slideId);
+
+	pauseDelayBar();	
 }
+
 
 //Mouse events
 
@@ -210,45 +238,17 @@ function prevButtonAction() {
   }
 }
 
+startSlideShow();
 
 document.addEventListener("visibilitychange", function() {
   if (document.visibilityState === 'visible') {
     startSlideShow();
+	setTimeout(function() {
+		startDelayBar();
+	})
+	
   } else {
     clearInterval(slideId);
+	pauseDelayBar();
   }
-});
-
-startSlideShow();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+})
