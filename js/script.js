@@ -107,15 +107,14 @@ slideContainer.addEventListener('transitionend', () => {
 });
 
 function pauseSliding(){
-	mainContainer.addEventListener('touchstart', function onFirstTouch(e) {
-
-		mainContainer.removeEventListener('touchstart', onFirstTouch, false);
-	}, false);
-	
-	clearInterval(slideId);
-	pauseDelayBar();	
+	if(window.matchMedia("(pointer: coarse)").matches) {
+		// touchscreen
+		return;
+	}else {
+		clearInterval(slideId);
+		pauseDelayBar();
+	}	
 }
-
 
 //Mouse events
 
